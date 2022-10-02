@@ -1,5 +1,6 @@
 import os
 
+import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -79,8 +80,9 @@ async def fill_comp_style(item: LocCt):
     x = filling.fill_comp_style(item.loc, item.ct)
     return x
 
-
-'''
-.\venv\Scripts\activate
-uvicorn main:app --reload
-'''
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=5000, log_level="info", reload=True)
+# '''
+# .\venv\Scripts\activate
+# uvicorn main:app --reload
+# '''
