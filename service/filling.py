@@ -68,13 +68,13 @@ def fill_exception(loc, ct, df, df_new):
     return df, df_new
 
 
-def fill_comp_style(loc, ct,):
+def fill_comp_style(loc, ct):
     df = pd.read_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_feat.xlsx', sheet_name='Sheet1')
     df_new = pd.DataFrame(columns=df.columns)
     df, df_new = fill_exception(loc, ct, df, df_new)
     df, df_new = my_ends_with(loc, df, df_new)
 
-    df_new.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_dm.xlsx', index=False)
+    df_new.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_dm_filled.xlsx', index=False)
     df.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_feat.xlsx', index=False)
     c = df.shape[0]
 
@@ -83,6 +83,40 @@ def fill_comp_style(loc, ct,):
     df, df_new = remove_processed_record1(df_new, df_new1)
     df_new.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_dm_false.xlsx', index=False)
     df_new.drop(df_new.columns[0:6], axis=1, inplace=True)
-    df_new.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_dm_false_no_col.xlsx', index=False)
+    df_new.to_excel(f'{loc}/{ct}/excel/{ct}_dm_false.xlsx', index=False)
 
-    return c, df_new.shape[0]
+    return {'xpath_left': c, 'false_count': df_new.shape[0]}
+
+
+def fill_feat(loc, ct):
+    df_foo = pd.read_excel(f'{loc}/fixed.xlsx', sheet_name='fill_feat')
+    df_foo.set_index("xpath", drop=True, inplace=True)
+    dictionary = df_foo.to_dict(orient="index")
+    df = pd.read_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_tag.xlsx', sheet_name='Sheet1')
+    for key, val in dictionary.items():
+        # my_patt = tu[0].replace('*', '(.*?)')
+        xpath = re.compile(key)
+        for index, row in df.iterrows():
+            if re.fullmatch(xpath, row['m_xpath']):
+                df.iat[index, 0] = xpath.sub('\\1', row['m_xpath'])
+                if pd.isnull(df.iloc[index, 3]):
+                    df.iat[index, 3] = val['feat']  # feat
+
+    df.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_feat.xlsx', index=False)
+    return True
+
+
+def fill_tm_by_dd(loc, ct):
+    df_foo = pd.read_excel(f'{loc}/{ct}/excel/{ct}_rule.xlsx', sheet_name='data_dic')
+    df_foo.set_index("map_tag", drop=True, inplace=True)
+    dictionary = df_foo.to_dict(orient="index")
+    my_ls = []
+    for key, val in dictionary.items():
+        ls = val['tag'].split(',')
+        for item in ls:
+            my_ls.append((key, item.strip()))
+    df = pd.DataFrame(my_ls, columns=['tag', 'map_tag'])
+    with pd.ExcelWriter(f'{loc}/{ct}/excel/{ct}_rule.xlsx', engine='openpyxl', mode='a',
+                        if_sheet_exists='replace') as writer:
+        df.to_excel(writer, sheet_name='tag_master', index=False)
+    return True
