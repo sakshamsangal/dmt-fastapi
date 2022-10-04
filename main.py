@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 import service.mapping as mapping
 import service.filling as filling
+import service.mastersheet as ms1
 
 
 class MapXpath(BaseModel):
@@ -51,6 +52,12 @@ async def dm_sheet(item: MapXpath):
     return x
 
 
+@app.post("/mastersheet", status_code=200)
+async def master_sheet(item: MapXpath):
+    res = ms1.master_sheet(item.loc, item.ct, item.file_name, item.sn)
+    return {'status': res}
+
+
 @app.post("/map-xpath", status_code=200)
 async def map_xpath(item: MapXpath):
     res = mapping.map_xpath(item.loc, item.ct, item.file_name, item.sn)
@@ -79,6 +86,7 @@ async def fill_feat(item: LocCt):
 async def fill_comp_style(item: LocCt):
     x = filling.fill_comp_style(item.loc, item.ct)
     return x
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=5000, log_level="info", reload=True)
