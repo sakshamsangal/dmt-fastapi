@@ -34,6 +34,7 @@ def map_xpath_fixed(loc, df):
 def map_tag(loc, ct):
     df = pd.read_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_xpath.xlsx', sheet_name='Sheet1')
     df_foo = pd.read_excel(f'{loc}/{ct}/excel/{ct}_rule.xlsx', sheet_name='tag_map')
+    df_foo.fillna('skip', inplace=True)
     df_foo.set_index("tag", drop=True, inplace=True)
     dictionary = df_foo.to_dict(orient="index")
 

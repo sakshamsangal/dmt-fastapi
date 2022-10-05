@@ -12,7 +12,7 @@ def remove_processed_record(df, df_new):
 
 
 def remove_processed_record1(df, df_new):
-    rows = df.loc[df['comp'] != df['Component'], :]
+    rows = df.loc[(df['comp'] != df['Component']) | (df['style'] != df['Styling']), :]
     df_new = pd.concat([df_new, pd.DataFrame.from_records(rows)])
     df.drop(rows.index, inplace=True)
     df.reset_index(drop=True, inplace=True)
@@ -108,13 +108,17 @@ def fill_feat(loc, ct):
 
 def fill_tm_by_dd(loc, ct):
     df_foo1 = pd.read_excel(f'{loc}/{ct}/excel/{ct}_rule.xlsx', sheet_name='tag_map')
-    df_foo1.set_index("tag", drop=True, inplace=True)
+    df_foo1['id'] = df_foo1['tag']
+    df_foo1.set_index("id", drop=True, inplace=True)
     dictionary1 = df_foo1.to_dict(orient="index")
 
     df_foo = pd.read_excel(f'{loc}/{ct}/excel/{ct}_rule.xlsx', sheet_name='data_dic')
+    df_foo.fillna('', inplace=True)
     df_foo.set_index("map_tag", drop=True, inplace=True)
     dictionary = df_foo.to_dict(orient="index")
     for key, val in dictionary.items():
+        if val['tag'] == '':
+            continue
         ls = val['tag'].split(',')
         for item in ls:
             dictionary1[item.strip()]['map_tag'] = key
