@@ -76,6 +76,12 @@ async def map_tag(item: LocCt):
     return {'status': res}
 
 
+@app.post("/create-dd", status_code=200)
+async def create_dd(item: LocCt):
+    res = mapping.create_dd(item.loc, item.ct)
+    return {'status': res}
+
+
 @app.post("/fill-feat", status_code=200)
 async def fill_feat(item: LocCt):
     ls = filling.fill_feat(item.loc, item.ct)
