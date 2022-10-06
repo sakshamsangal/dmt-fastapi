@@ -9,5 +9,5 @@ def tag_master(loc, ct, fn, sn):
     df.rename({'Tags': 'tag', 'Has Content': 'has_text'}, axis=1, inplace=True)
     with pd.ExcelWriter(f'{loc}/{ct}/excel/{ct}_rule.xlsx', engine='openpyxl', mode='a',
                         if_sheet_exists='replace') as writer:
-        df.to_excel(writer, sheet_name='tag_master', index=False, columns=['tag', 'has_text'])
+        df.to_excel(writer, sheet_name='tag_master', index=False)
     return True

@@ -1,6 +1,7 @@
 import os
 import time
 
+import pandas as pd
 import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -71,7 +72,13 @@ async def dm_sheet(item: DMSheet):
     if 'tag_master' not in wb.sheetnames:
         tm.tag_master(item.loc, item.ct, item.ms.fn, item.ms.sn)
     if 'tag_map' not in wb.sheetnames:
-        mapping.map_tag(item.loc, item.ct)
+        df = pd.DataFrame(columns=['tag', 'map_tag'])
+        df_tm = pd.read_excel(f'{item.loc}/{item.ct}/excel/{item.ct}_rule.xlsx', sheet_name='tag_master')
+        df['tag'] = df_tm['tag']
+        with pd.ExcelWriter(f'{item.loc}/{item.ct}/excel/{item.ct}_rule.xlsx', engine='openpyxl', mode='a',
+                            if_sheet_exists='replace') as writer:
+            df.to_excel(writer, sheet_name='tag_master', index=False)
+    mapping.map_tag(item.loc, item.ct)
     mapping.map_xpath(item.loc, item.ct, item.dm.fn, item.dm.sn)
     mapping.map_tag(item.loc, item.ct)
     filling.fill_feat(item.loc, item.ct)
