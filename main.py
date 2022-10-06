@@ -5,17 +5,35 @@ import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from openpyxl import load_workbook
 import service.mapping as mapping
 import service.filling as filling
-import service.mastersheet as ms1
+import service.master as tm
 from fastapi.responses import StreamingResponse
 
 
 class MapXpath(BaseModel):
     loc: str
     ct: str
-    file_name: str
+    fn: str
     sn: str
+
+
+class MSFileName(BaseModel):
+    fn: str
+    sn: str
+
+
+class DMFileName(BaseModel):
+    fn: str
+    sn: str
+
+
+class DMSheet(BaseModel):
+    loc: str
+    ct: str
+    dm: DMFileName
+    ms: MSFileName
 
 
 class DirMaker(BaseModel):
@@ -46,23 +64,30 @@ async def create_item(item: DirMaker):
 
 
 @app.post("/dm-sheet", status_code=200)
-async def dm_sheet(item: MapXpath):
-    mapping.map_xpath(item.loc, item.ct, item.file_name, item.sn)
+async def dm_sheet(item: DMSheet):
+    print(item)
+    wb = load_workbook(f'{item.loc}/{item.ct}/excel/{item.ct}_rule.xlsx',
+                       read_only=True)  # open an Excel file and return a workbook
+    if 'tag_master' not in wb.sheetnames:
+        tm.tag_master(item.loc, item.ct, item.ms.fn, item.ms.sn)
+    if 'tag_map' not in wb.sheetnames:
+        mapping.map_tag(item.loc, item.ct)
+    mapping.map_xpath(item.loc, item.ct, item.dm.fn, item.dm.sn)
     mapping.map_tag(item.loc, item.ct)
     filling.fill_feat(item.loc, item.ct)
     x = filling.fill_comp_style(item.loc, item.ct)
     return x
 
 
-@app.post("/mastersheet", status_code=200)
-async def master_sheet(item: MapXpath):
-    res = ms1.master_sheet(item.loc, item.ct, item.file_name, item.sn)
+@app.post("/tag-master", status_code=200)
+async def tag_master(item: MapXpath):
+    res = tm.tag_master(item.loc, item.ct, item.fn, item.sn)
     return {'status': res}
 
 
 @app.post("/map-xpath", status_code=200)
 async def map_xpath(item: MapXpath):
-    res = mapping.map_xpath(item.loc, item.ct, item.file_name, item.sn)
+    res = mapping.map_xpath(item.loc, item.ct, item.fn, item.sn)
     return {'status': res}
 
 

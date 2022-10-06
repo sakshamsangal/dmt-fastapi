@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "ddd7db53-137f-4945-9edb-0cd537085c5b",
+		"name": "dmt-fastapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5663690"
+	},
+	"item": [
+		{
+			"name": "standalone",
+			"item": [
+				{
+					"name": "create-dd",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/fill-tm-by-dd",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fill-tm-by-dd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-tag-master",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\",\r\n    \"fn\": \"deskbook_dm\",\r\n    \"sn\": \"Sheet1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/tag-master",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tag-master"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dir-maker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"folder_name\": [\r\n        \"cat1\"\r\n    ],\r\n    \"loc\":\"{{loc}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/dir-maker",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"dir-maker"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "map-xpath",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\",\r\n    \"fn\": \"deskbook_dm\",\r\n    \"sn\": \"Sheet1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/map-xpath",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"map-xpath"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "map-tag",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/map-tag",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"map-tag"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fill-feat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"loc\": \"{{loc}}\",\r\n    \"ct\": \"{{ct}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/fill-feat",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fill-feat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fill-comp-style",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"loc\": \"{{loc}}\",\r\n    \"ct\": \"{{ct}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/fill-comp-style",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fill-comp-style"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fill-tm-by-dd",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/fill-tm-by-dd",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fill-tm-by-dd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "dm-sheet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loc\": \"{{loc}}\",\r\n    \"ct\": \"{{ct}}\",\r\n    \"dm\": {\r\n        \"fn\": \"deskbook_dm\",\r\n        \"sn\": \"Sheet1\"\r\n    },\r\n    \"ms\": {\r\n        \"fn\": \"ms\",\r\n        \"sn\": \"Sheet\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dm-sheet",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dm-sheet"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

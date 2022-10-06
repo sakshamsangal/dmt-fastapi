@@ -123,7 +123,7 @@ def fill_tm_by_dd(loc, ct):
         for item in ls:
             dictionary1[item.strip()]['map_tag'] = key
 
-    df = pd.DataFrame(dictionary1, columns=['tag', 'map_tag'])
+    df = pd.DataFrame(dictionary1.values(), columns=['tag', 'map_tag'])
     with pd.ExcelWriter(f'{loc}/{ct}/excel/{ct}_rule.xlsx', engine='openpyxl', mode='a',
                         if_sheet_exists='replace') as writer:
         df.to_excel(writer, sheet_name='tag_map', index=False)
