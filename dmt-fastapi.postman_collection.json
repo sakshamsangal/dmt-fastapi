@@ -220,6 +220,37 @@
 			]
 		},
 		{
+			"name": "master-from-xml",
+			"item": [
+				{
+					"name": "create-master",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\",\r\n    \"all_dir\": true,\r\n    \"prod\": [\r\n        \"990\"\r\n    ],\r\n    \"master_type\": \"att\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/master",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"master"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "dm-sheet",
 			"request": {
 				"method": "POST",
