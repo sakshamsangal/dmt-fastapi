@@ -11,6 +11,7 @@ import service.mapping as mapping
 import service.filling as filling
 import service.master as ms1
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 
 
 class MapXpath(BaseModel):
@@ -58,6 +59,8 @@ class CreateMaster(BaseModel):
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @app.post("/dir-maker", status_code=201)
 async def create_item(item: DirMaker):
@@ -66,9 +69,9 @@ async def create_item(item: DirMaker):
     for x in item.folder_name:
         for y in ['xml', 'excel', 'word', 'pdf', 'res']:
             os.makedirs(f'{loc}/{x}/{y}', exist_ok=True)
-        os.makedirs(f'{loc}/{x}/xml/ox_{x}', exist_ok=True)
-        os.makedirs(f'{loc}/{x}/xml/cx_{x}', exist_ok=True)
-        os.makedirs(f'{loc}/{x}/xml/zx_{x}', exist_ok=True)
+        os.makedirs(f'{loc}/{x}/xml/xml_{x}_orig', exist_ok=True)
+        os.makedirs(f'{loc}/{x}/xml/xml_{x}_chunk', exist_ok=True)
+        os.makedirs(f'{loc}/{x}/xml/xml_{x}_zip', exist_ok=True)
     return item
 
 
@@ -151,17 +154,17 @@ if __name__ == "__main__":
 # '''
 
 
-async def fake_video_streamer():
-    # for i in range(5):
-    yield b"some fake video bytes<br>"
-    time.sleep(2)
-    yield b"AKSHU<br>"
-    time.sleep(2)
-    yield b"some fake video bytes<br>"
-    time.sleep(2)
-    yield b"AKSHU<br>"
+# async def fake_video_streamer():
+#     # for i in range(5):
+#     yield b"some fake video bytes<br>"
+#     time.sleep(2)
+#     yield b"AKSHU<br>"
+#     time.sleep(2)
+#     yield b"some fake video bytes<br>"
+#     time.sleep(2)
+#     yield b"AKSHU<br>"
 
-
-@app.get("/")
-async def main():
-    return StreamingResponse(fake_video_streamer(), media_type="text/html")
+#
+# @app.get("/")
+# async def main():
+#     return StreamingResponse(fake_video_streamer(), media_type="text/html")
