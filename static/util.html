@@ -41,6 +41,8 @@
 
             <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action"
+                   onclick="formRequest('dir-maker', '/dir-maker')">dir-maker</a>
+                <a href="#" class="list-group-item list-group-item-action"
                    onclick="formRequest('xml-chunk', '/xml-chunk')">xml-chunk</a>
             </div>
 
@@ -90,6 +92,9 @@
     })
 
     big_obj = {
+        'dir-maker': `{
+             "folder_name": ["akshu"]
+        }`,
         'xml-chunk':`{
             "tag_selected": {
                 "book": 1
