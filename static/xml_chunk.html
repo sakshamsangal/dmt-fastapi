@@ -41,23 +41,7 @@
 
             <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action"
-                   onclick="formRequest('tag-master', '/tag-master')">tag-master</a>
-                <a href="#" class="list-group-item list-group-item-action"
-                   onclick="formRequest('dir-maker', '/dir-maker')">dir-maker</a>
-                <a href="#" class="list-group-item list-group-item-action"
-                   onclick="formRequest('map-xpath', '/map-xpath')">map-xpath</a>
-
-                <a href="#" class="list-group-item list-group-item-action" onclick="formRequest('map-tag', '/map-tag')">map-tag</a>
-                <a href="#" class="list-group-item list-group-item-action"
-                   onclick="formRequest('fill-feat', '/fill-feat')">fill-feat</a>
-                <a href="#" class="list-group-item list-group-item-action"
-                   onclick="formRequest('fill-comp-style', '/fill-comp-style')">fill-comp-style</a>
-
-                <a href="#" class="list-group-item list-group-item-action"
-                   onclick="formRequest('fill-tm-by-dd', '/fill-tm-by-dd')">fill-tm-by-dd</a>
-                <a href="#" class="list-group-item list-group-item-action" onclick="formRequest('master', '/master')">master</a>
-                <a href="#" class="list-group-item list-group-item-action"
-                   onclick="formRequest('dm-sheet', '/dm-sheet')">dm-sheet</a>
+                   onclick="formRequest('xml-chunk', '/xml-chunk')">xml-chunk</a>
             </div>
 
         </div>
@@ -106,39 +90,13 @@
     })
 
     big_obj = {
-        'master': `{
-            "all_dir": true,
-            "prod": [
-                "65"
-            ],
-            "master_type": "tag"
-        }`,
-        'dir-maker': `{
-             "folder_name": ["akshu"]
-        }`,
-        'dm-sheet': `{
-            "dm": {
-                "fn": "deskbook_dm",
-                "sn": "Sheet1"
+        'xml-chunk':`{
+            "tag_selected": {
+                "book": 1
             },
-            "ms": {
-                "fn": "ms",
-                "sn": "Sheet"
-            }
-        }`,
-        'create-dd': `{}`,
-        'tag-master': `{
-            "fn": "deskbook_dm",
-            "sn": "Sheet1"
-        }`,
-        'map-xpath': `{
-            "fn": "deskbook_dm",
-            "sn": "Sheet1"
-        }`,
-        'map-tag': `{}`,
-        'fill-feat': `{}`,
-        'fill-comp-style': `{}`,
-        'fill-tm-by-dd': `{}`
+            "all_dir": false,
+            "prod_names": ["65"]
+        }`
     }
 
     function formRequest(str, endpoint) {
