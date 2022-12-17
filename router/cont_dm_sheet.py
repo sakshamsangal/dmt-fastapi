@@ -1,9 +1,13 @@
+import time
+
 import pandas as pd
 from fastapi import APIRouter
 # from fastapi import FastAPI
 from pydantic import BaseModel
 
 from openpyxl import load_workbook
+from starlette.responses import StreamingResponse
+
 import service.mapping as mapping
 import service.filling as filling
 import service.master as ms1
@@ -47,9 +51,6 @@ class DMSheet(BaseModel):
     ms: MSFileName
 
 
-
-
-
 class LocCt(BaseModel):
     loc: str
     ct: str
@@ -61,9 +62,6 @@ class CreateMaster(BaseModel):
     all_dir: str
     prod: list
     master_type: str
-
-
-
 
 
 @dm.post("/dm-sheet", status_code=200)
@@ -134,34 +132,24 @@ def process_master(item: CreateMaster):
     res = ms1.process_master(item.loc, item.ct, item.all_dir, item.prod, item.master_type)
     return {'status': res}
 
-
 # '''
 # .\venv\Scripts\activate
 # uvicorn main:app --reload
 # '''
 
-
-# async def fake_video_streamer():
-#     # for i in range(5):
-#     yield b"some fake video bytes<br>"
-#     time.sleep(2)
-#     yield b"AKSHU<br>"
-#     time.sleep(2)
-#     yield b"some fake video bytes<br>"
-#     time.sleep(2)
-#     yield b"AKSHU<br>"
-
 #
-# @dm.get("/")
+# async def fake_video_streamer():
+#     for i in range(20):
+#         yield b"some fake video bytes<br>"
+#         time.sleep(1)
+#
+#     # yield b"AKSHU<br>"
+#     # time.sleep(2)
+#     # yield b"some fake video bytes<br>"
+#     # time.sleep(2)
+#     # yield b"AKSHU<br>"
+#
+#
+# @dm.get("/lavi")
 # async def main():
 #     return StreamingResponse(fake_video_streamer(), media_type="text/html")
-@dm.post('/xml-chunk',  status_code=201)
-def xml_chunk(item: XMLChunk):
-    print(item)
-    ct = item.ct
-    loc = item.loc
-    tag_selected = item.tag_selected
-    prod_names = item.prod_names
-    all_dir = item.all_dir
-    chunk.process_xml_chunk(loc, ct, tag_selected, all_dir, prod_names)
-    return {'ct': ct, 'loc': loc, 'status': True, 'tag_selected': tag_selected}

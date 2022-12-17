@@ -15,7 +15,7 @@ def get_xml_root(loc, ct, all_dir, products):
     if all_dir:
         products = get_folder_name(loc, ct)
     for prod_name in products:
-        path_of_xml = f"{loc}/{ct}/xml/ox_{ct}/{prod_name}/*.xml"
+        path_of_xml = f"{loc}/{ct}/xml/xml_{ct}_orig/{prod_name}/*.xml"
         for xml_file in sorted(glob.glob(path_of_xml), key=os.path.getsize):
             print(path_of_xml)
             file_name = os.path.basename(xml_file)
