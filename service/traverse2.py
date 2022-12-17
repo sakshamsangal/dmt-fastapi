@@ -54,7 +54,7 @@ def sole_by_xpath(loc, content_type, all_dir, products):
                 p.tag = y
 
         xml_traverse_xpath(root, etree.QName(root).localname)
-        for bad in root.xpath("//to-be-remove"):
+        for bad in root.xpath("//not-render"):
             bad.getparent().remove(bad)
 
     fstring = etree.tostring(my_root).decode()
@@ -71,6 +71,7 @@ def sole_by_xpath(loc, content_type, all_dir, products):
 
 
 def my_temp(loc, ct, products):
+    global xpath_map
     config = configparser.RawConfigParser()
     config.read('config.ini')
     x = config['deskbook'].items()
@@ -93,6 +94,8 @@ def my_temp(loc, ct, products):
                                 'tag': y,
                                 'att': rem
                             }
+        sort_data = sorted(xpath_map.items(), reverse=True)
+        xpath_map = dict(sort_data)
         print(xpath_map)
         print(tag_map)
 
